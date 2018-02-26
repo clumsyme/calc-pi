@@ -34,14 +34,13 @@ class App extends Component {
                     pi: newPi,
                 })
             }
-            requestAnimationFrame(this.updatePi)
         } else {
-            cancelAnimationFrame(this.animationframe)
+            clearInterval(this.calcInterval)
         }
     }
     calcPi = () => {
         let now = Date.now()
-        this.then = now + 3000
+        this.then = now + 100000
         this.setState(
             {
                 total: 0,
@@ -50,7 +49,7 @@ class App extends Component {
                 calculating: true,
             },
             () => {
-                this.animationframe = requestAnimationFrame(this.updatePi)
+                this.calcInterval = setInterval(this.updatePi)
                 this.setState({
                     calculating: false,
                 })
@@ -64,6 +63,8 @@ class App extends Component {
                 <button onClick={this.calcPi} disabled={this.state.calculating}>
                     计算
                 </button>
+                <h2><span>{this.state.hit}</span></h2>
+                <h2><span>{this.state.total}</span></h2>
             </div>
         )
     }
